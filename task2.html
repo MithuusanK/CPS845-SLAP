@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLAP Logout</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #e0e7ff, #f8fafc);
+        }
+
+        /* Logo Styles */
+        .logo-container {
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 80px;
+            font-weight: 900;
+            letter-spacing: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1f3c88;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .letter {
+            transition: transform 1s ease;
+        }
+
+        /* Constant glow and rotate effect for the letter S */
+        .rotate-glow {
+            animation: rotateEffect 1s ease-in-out forwards;
+            color: #007bff;
+            text-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
+        }
+
+        @keyframes rotateEffect {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .subtitle {
+            font-size: 24px;
+            font-weight: 400;
+            color: #333;
+            margin-top: 10px; /* Existing margin */
+            margin-bottom: 50px; /* Add this line for spacing */
+        }
+
+        .logout-container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem; /* Existing margin */
+            margin-top: 10px; /* Add this line for additional spacing */
+        }
+
+        p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 2rem;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            width: 48%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #confirmLogout {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        #confirmLogout:hover {
+            background-color: #0056b3;
+        }
+
+        #cancelLogout {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        #cancelLogout:hover {
+            background-color: #c82333;
+        }
+
+        .success-message {
+            font-size: 1.2rem;
+            color: #4CAF50; /* Green color for success message */
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .success-message a {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #007bff; 
+            color: #fff; /* White text color */
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .success-message a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="logout-container" id="logoutContainer">
+        <div class="logo-container">
+            <div class="logo">
+                <span class="letter">G</span>
+                <span class="letter" id="s-letter">S</span>
+                <span class="letter">U</span>
+            </div>
+            <div class="subtitle">Gould Street University</div>
+        </div>
+        <h1>Logout from SLAP</h1>
+        <p>Are you sure you want to log out?</p>
+        <div class="button-group">
+            <button id="confirmLogout">I'm sure</button>
+            <button id="cancelLogout">Cancel</button>
+        </div>
+    </div>
+    
+    <script>
+        const confirmLogoutBtn = document.getElementById('confirmLogout');
+        const cancelLogoutBtn = document.getElementById('cancelLogout');
+
+        // Redirect to the success page on logout confirmation
+        confirmLogoutBtn.addEventListener('click', () => {
+            // Redirect to the success page
+            window.location.href = "success2.html"; 
+        });
+
+        // Redirect to course shell when Cancel is clicked (T8)
+        cancelLogoutBtn.addEventListener('click', () => {
+            window.location.href = "task8.html"; 
+        });
+
+        // Add a 3-second delay before triggering the glow and rotate effect for the letter 'S'
+        window.onload = function() {
+            const sLetter = document.getElementById('s-letter');
+            setTimeout(() => {
+                sLetter.classList.add('rotate-glow');
+            }, 3000); // 3-second delay before the animation starts
+        }
+    </script>
+
+</body>
+</html>
