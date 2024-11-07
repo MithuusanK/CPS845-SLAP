@@ -183,8 +183,8 @@
         }
 
         .dash-button {
-            width: 250px;
-            height: 150px;
+            width: 300px;
+            height: 100px;
             background-color: #e3e3f7;
             color: rgb(0, 0, 0);
             border: none;
@@ -198,7 +198,7 @@
         }
         
         .dash-button:hover {
-            background-color: #f4f4ff;
+            background-color:  #007bff;
         }
 
         .courseHeader-container {
@@ -320,6 +320,9 @@
         <div class="button-group">
             <button class="dash-button" id="createProjectButton">New Project</button>
             <button class="dash-button" id="createSLAPButton">Create SLAP</button>
+            <button class="dash-button" id="editProjectButton">Edit Project</button>
+            <button class="dash-button" id="viewMessageButton">View Messages</button>
+            <button class="dash-button" id="sendMessageButton">Send Messages</button>
         </div>
 
         <div class="projects-view">
@@ -485,6 +488,15 @@
         document.getElementById('createSLAPButton').addEventListener('click', function() {
             const courseID = getQueryParam('courseID');
             window.location.href = `task20.html?courseID=${courseID}`;
+        });
+        document.getElementById('editProjectButton').addEventListener('click', function() {
+            window.location.href = 'task14.html';
+        });
+        document.getElementById('viewMessageButton').addEventListener('click', function() {
+            window.location.href = 'task3.html';
+        });
+        document.getElementById('sendMessageButton').addEventListener('click', function() {
+            window.location.href = 'task4.html';
         });
     </script>
 </body>
