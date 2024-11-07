@@ -209,7 +209,6 @@
             }, 3000); // 3-second delay before the animation starts
         }
         //localStorage.removeItem('slapCredentials');
-        console.log(JSON.parse(localStorage.getItem('slapCredentials')));
         // Initialize credentials if not present in localStorage
         if (!localStorage.getItem('slapCredentials')) {
             const initialCredentials = [
@@ -220,6 +219,81 @@
             ];
             localStorage.setItem('slapCredentials', JSON.stringify(initialCredentials));
         }
+
+        //localStorage.removeItem('projects');
+        if (!localStorage.getItem('projects')) {
+            const projects = [
+                { name: "Entropy Theory Project", ID: 0, courseID: 0, dueDate: "2024-10-31"},
+                { name: "Enthalpy Analysis Project", ID: 1, courseID: 0, dueDate: "2024-11-14"},
+                { name: "Heat Sink Design Project", ID: 2, courseID: 0, dueDate: "2024-11-31"},
+                { name: "Term Project", ID: 3, courseID: 0, dueDate: "2024-12-14"},
+                { name: "Kinematics Simulation Project", ID: 4, courseID: 1, dueDate: "2024-10-31"},
+                { name: "Truss Bridge Design Project", ID: 5, courseID: 1, dueDate: "2024-11-14"},
+                { name: "Cantilever Analysis Project", ID: 6, courseID: 1, dueDate: "2024-11-31"},
+                { name: "Term Project", ID: 7, courseID: 1, dueDate: "2024-12-14"},
+                { name: "Damper Modeling Projects", ID: 8, courseID: 2, dueDate: "2024-10-31"},
+                { name: "Forced Vibration Project", ID: 9, courseID: 2, dueDate: "2024-11-14"},
+                { name: "Free Vibration Project", ID: 10, courseID: 2, dueDate: "2024-11-31"},
+                { name: "Isolation Model Simulator", ID: 11, courseID: 2, dueDate: "2024-12-14"},
+                { name: "Turbulent Tap Project", ID: 12, courseID: 3, dueDate: "2024-10-31"},
+                { name: "Laminar Flow Project", ID: 13, courseID: 3, dueDate: "2024-11-14"},
+                { name: "Flow Gate Project", ID: 14, courseID: 3, dueDate: "2024-11-31"},
+                { name: "Term Project", ID: 15, courseID: 3, dueDate: "2024-12-14"}
+            ];
+            localStorage.setItem('projects', JSON.stringify(projects));
+        }
+
+        //localStorage.removeItem('slapAlerts');
+        if (!localStorage.getItem('slapAlerts')) {
+            const initialAlerts = [
+                { ID: 0, title: "Test", text: "Placeholder", global: true, courseID: 0 }
+            ];
+            localStorage.setItem('slapAlerts', JSON.stringify(initialAlerts));
+        }
+
+        //localStorage.removeItem('courses');
+        if (!localStorage.getItem('courses')) {
+            const initialCourses = [
+                { courseID: 0, title: "Thermodynamics", courseCode: "MEC305", courseDescription: "", profSlapID: "misic", colour: "#0056b3",
+                    dates: {
+                        startDate: "2025-01-08",
+                        endDate: "2025-05-15",
+                        enrollmentDeadline: "2025-01-15"
+                    }
+                },
+                { courseID: 1, title: "Engineering Dynamics", courseCode: "MEC120", courseDescription: "", profSlapID: "misic", colour: "#20561f",
+                    dates: {
+                        startDate: "2025-01-08",
+                        endDate: "2025-05-15",
+                        enrollmentDeadline: "2025-01-15"
+                    }
+                },
+                { courseID: 2, title: "Mechanical Vibrations", courseCode: "MEC310", courseDescription: "", profSlapID: "misic", colour: "#f0568f",
+                    dates: {
+                        startDate: "2025-01-08",
+                        endDate: "2025-05-15",
+                        enrollmentDeadline: "2025-01-15"
+                    }
+                },
+                { courseID: 3, title: "Fluid Dynamics", courseCode: "MEC278", courseDescription: "", profSlapID: "misic", colour: "#40f61f",
+                    dates: {
+                        startDate: "2025-01-08",
+                        endDate: "2025-05-15",
+                        enrollmentDeadline: "2025-01-15"
+                    }
+                }
+            ];
+            localStorage.setItem('courses', JSON.stringify(initialCourses));
+        }
+
+        if (!localStorage.getItem('studentCourseRegistration')) {
+            const initialStudentCourseRegistration = [
+                { studentID: "student123", courseID: 0 },
+                { studentID: "student456", courseID: 0 }
+            ];
+            localStorage.setItem('studentCourseRegistration', JSON.stringify(initialStudentCourseRegistration));
+        }
+
         document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent form submission
             const slapID = document.getElementById('slapID').value;
