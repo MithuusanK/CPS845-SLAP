@@ -330,10 +330,31 @@
                 }
             }
         }
-
+        //localStorage.removeItem('courses');
         if (!localStorage.getItem('courses')) {
             const initialCourses = [
-                { courseID: 0, title: "Test Course", courseCode: "CPS845", courseDescription: "", profSlapID: "misic", colour: "#0056b3",
+                { courseID: 0, title: "Thermodynamics", courseCode: "MEC305", courseDescription: "", profSlapID: "misic", colour: "#0056b3",
+                    dates: {
+                        startDate: "2025-01-08",
+                        endDate: "2025-05-15",
+                        enrollmentDeadline: "2025-01-15"
+                    }
+                },
+                { courseID: 1, title: "Engineering Dynamics", courseCode: "MEC120", courseDescription: "", profSlapID: "misic", colour: "#20561f",
+                    dates: {
+                        startDate: "2025-01-08",
+                        endDate: "2025-05-15",
+                        enrollmentDeadline: "2025-01-15"
+                    }
+                },
+                { courseID: 2, title: "Mechanical Vibrations", courseCode: "MEC310", courseDescription: "", profSlapID: "misic", colour: "#f0568f",
+                    dates: {
+                        startDate: "2025-01-08",
+                        endDate: "2025-05-15",
+                        enrollmentDeadline: "2025-01-15"
+                    }
+                },
+                { courseID: 3, title: "Fluid Dynamics", courseCode: "MEC278", courseDescription: "", profSlapID: "misic", colour: "#40f61f",
                     dates: {
                         startDate: "2025-01-08",
                         endDate: "2025-05-15",
