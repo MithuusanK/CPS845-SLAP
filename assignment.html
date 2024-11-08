@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gould Street University - Assignment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0e7ff, #f8fafc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .document-list {
+            margin-top: 1.5rem;
+            text-align: left;
+        }
+
+        .document-item {
+            margin: 0.5rem 0;
+        }
+
+        .document-item button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .document-item button:hover {
+            background-color: #0056b3;
+        }
+
+   
+        .check-submission-button, .view-submission-history-button, .view-evaluation-button {
+            display: none;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .check-submission-button:hover, .view-submission-history-button:hover, .view-evaluation-button:hover {
+            background-color: #0056b3;
+        }
+
+      
+        .latest-submission, .submission-list, .evaluation-section {
+            display: none;
+            text-align: left;
+            margin-top: 1.5rem;
+        }
+
+        .submission-item, .evaluation-content {
+            background-color: #f0f4f8;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 0.5rem;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Assignment Details</h1>
+        <p><strong id="assignmentTitle"></strong></p>
+        <p id="assignmentDescription"></p>
+
+        <div class="document-list" id="documentList">
+            
+        </div>
+
+        <button class="check-submission-button" id="checkSubmissionButton">Check Submission</button>
+        <button class="view-submission-history-button" id="viewSubmissionHistoryButton">View Submission History</button>
+        <button class="view-evaluation-button" id="viewEvaluationButton">View Evaluation</button>
+
+       
+        <div class="latest-submission" id="latestSubmission">
+            <h2>Latest Submission</h2>
+            <div class="submission-item" id="latestSubmissionContent">No submission found.</div>
+        </div>
+
+        
+        <div class="submission-list" id="submissionHistory">
+            <h2>Submission History</h2>
+        </div>
+
+        
+        <div class="evaluation-section" id="evaluationSection">
+            <h2>Evaluation</h2>
+            <div class="evaluation-content" id="evaluationContent">
+                <p><strong>Grade:</strong> <span id="evaluationGrade">N/A</span></p>
+                <p><strong>Comments:</strong> <span id="evaluationComments">No comments available.</span></p>
+            </div>
+        </div>
+
+        <a href="course_details.html" class="back-link">Back to Course</a>
+    </div>
+
+    <script>
+       
+        const assignmentsDetails = {
+            "CPS101_A1": {
+                title: "Basic Programming",
+                description: "Solve problems using basic programming constructs.",
+                documents: [
+                    { name: "Assignment 1 Instructions", url: "docs/CS101_A1_Instructions.pdf" },
+                    { name: "Sample Solutions", url: "docs/CS101_A1_Solutions.pdf" }
+                ]
+            },
+            "CPS101_A2": {
+                title: "Data Structures",
+                description: "Implement various data structures in Java.",
+                documents: [
+                    { name: "Assignment 2 Instructions", url: "docs/CS101_A2_Instructions.pdf" },
+                    { name: "Data Structure Examples", url: "docs/CS101_A2_Examples.pdf" }
+                ]
+            },
+            "MTH202_A1": {
+                title: "Calculus Problems",
+                description: "Complete the calculus problem set.",
+                documents: [
+                    { name: "Calculus Assignment Instructions", url: "docs/MATH202_A1_Instructions.pdf" },
+                    { name: "Practice Problems", url: "docs/MATH202_A1_Practice.pdf" }
+                ]
+            }
+        };
+
+        document.getElementById("viewEvaluationButton").onclick = async () => {
+            try {
+                const response = await fetch("/get-assignment-evaluations");
+                const submissions = await response.json();
+
+                const assignmentId = localStorage.getItem("selectedAssignment");
+                const submission = submissions.find(item => item.Assignment_Submission_ID === assignmentId);
+
+                const latestSubmissionContent = document.getElementById("latestSubmissionContent");
+                if (submission){
+                    latestSubmissionContent.innerHTML = `
+                        <strong>File Name:</strong> ${submission.originalFilename}<br>
+                        <strong>Submission Time:</strong> ${submission.Submussion_Date_Time}
+                    `;
+                }
+                else{
+                    latestSubmissionContent.innerHTML = "No submission found.";
+                }
+
+                document.getElementById("latestSubmission").styleDisplay = "block";
+
+            }catch (error){
+                console.error("Error fetching evaluations:", error);
+                docuement.getElementById("latestSubmissionContent").textContent = "Failed to load submission details"
+            }
+        }
+       
+        const evaluations = {
+
+
+            "CPS101_A1": {
+                grade: "85%",
+                comments: "Good job overall, but make sure to optimize your code for better efficiency."
+            },
+            "CPS101_A2": {
+                grade: "78%",
+                comments: "Solid understanding of data structures, but work on edge cases."
+            },
+            "MTH202_A1": {
+                grade: "92%",
+                comments: "Excellent work on calculus problems. Keep up the good understanding!"
+            }
+        };
+
+        
+        const assignmentId = localStorage.getItem("selectedAssignment");
+        const assignment = assignmentsDetails[assignmentId] || {};
+
+   
+        document.getElementById("assignmentTitle").textContent = assignment.title || "Assignment Not Found";
+        document.getElementById("assignmentDescription").textContent = assignment.description || "";
+
+        
+        const documentList = document.getElementById("documentList");
+        if (assignment.documents) {
+            assignment.documents.forEach(doc => {
+                const docItem = document.createElement("div");
+                docItem.classList.add("document-item");
+                const docButton = document.createElement("button");
+                docButton.textContent = `View ${doc.name}`;
+                docButton.onclick = () => {
+                    window.open(doc.url, "_blank");
+                };
+                docItem.appendChild(docButton);
+                documentList.appendChild(docItem);
+            });
+        }
+
+        const latestSubmissions = {
+            "CPS101_A1": {
+                title: "CPS101_A1 Submission",
+                date: "2024-10-30",
+                status: "Submitted"
+            },
+            "CPS101_A2": {
+                title: "CPS101_A2 Submission",
+                date: "2024-10-31",
+                status: "Not Submitted"
+            },
+            "MTH202_A1": {
+                title: "MTH202_A1 Submission",
+                date: "2024-10-29",
+                status: "Submitted"
+            }
+        };
+
+       
+        document.getElementById("checkSubmissionButton").onclick = () => {
+           
+            const latestSubmission = latestSubmissions[assignmentId] || null;
+
+          
+            const latestSubmissionContent = document.getElementById("latestSubmissionContent");
+            if (latestSubmission) {
+                latestSubmissionContent.innerHTML = `
+                    <strong>${latestSubmission.title}</strong><br>
+                    Date: ${latestSubmission.date}<br>
+                    Status: ${latestSubmission.status}
+                `;
+            } else {
+                latestSubmissionContent.textContent = "No submission found.";
+            }
+            document.getElementById("latestSubmission").style.display = "block"; 
+        };
+
+
+
+      
+        const userRole = localStorage.getItem("userRole") || "student"; 
+
+        
+        if (userRole === "student") {
+            document.getElementById("checkSubmissionButton").style.display = "inline-block";
+            document.getElementById("viewEvaluationButton").style.display = "inline-block";
+        } else if (userRole === "instructor") {
+            document.getElementById("viewSubmissionHistoryButton").style.display = "inline-block";
+        }
+
+        document.getElementById("viewEvaluationButton").onclick = () => {
+            const evaluation = evaluations[assignmentId] || { grade: "N/A", comments: "No evaluation available." };
+            document.getElementById("evaluationGrade").textContent = evaluation.grade;
+            document.getElementById("evaluationComments").textContent = evaluation.comments;
+            document.getElementById("evaluationSection").style.display = "block";
+        };
+    </script>
+</body>
+</html>
