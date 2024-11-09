@@ -266,6 +266,8 @@
         <h2>Options</h2>
         <div class="button-group">
             <button class="option-button" id="createSLAPButton">Create SLAPs</button>
+            <button class="option-button" id="viewMessageButton">View Messages</button>
+            <button class="option-button" id="sendMessageButton">Send Messages</button>
         </div>
     </div>
 
@@ -359,6 +361,12 @@
 
         document.getElementById('createSLAPButton').addEventListener('click', function() {
             window.location.href = `task20.html`;
+        });
+        document.getElementById('viewMessageButton').addEventListener('click', function() {
+            window.location.href = 'task3.html';
+        });
+        document.getElementById('sendMessageButton').addEventListener('click', function() {
+            window.location.href = 'task4.html';
         });
     </script>
 </body>
