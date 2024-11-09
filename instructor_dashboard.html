@@ -162,7 +162,7 @@
         /* Button Group */
         .button-group {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
         }
 
         /* Error Message */
@@ -214,6 +214,25 @@
             color: rgb(255, 255, 255);
         }
 
+        .option-button {
+            width: 250px;
+            height: 150px;
+            background-color: #e3e3f7;
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+        }
+        
+        .option-button:hover {
+            background-color: #f4f4ff;
+        }
+
     </style>
 </head>
 <body>
@@ -243,6 +262,10 @@
         <div id="courseContainer">
             <h2>My Courses</h2>
             <div id="courseButtonsContainer"></div>
+        </div>
+        <h2>Options</h2>
+        <div class="button-group">
+            <button class="option-button" id="createSLAPButton">Create SLAPs</button>
         </div>
     </div>
 
@@ -318,9 +341,6 @@
             });
 
         });
-        document.getElementById('coursesButton').addEventListener('click', function() {
-            window.location.href = 'courses_dashboard.html';
-        });
 
         document.getElementById('logoButton').addEventListener('click', function() {
             const userType = localStorage.getItem('userType'); 
@@ -335,6 +355,10 @@
                     window.location.href = "admin_dashboard.html"
                     break;
             }
+        });
+
+        document.getElementById('createSLAPButton').addEventListener('click', function() {
+            window.location.href = `task20.html`;
         });
     </script>
 </body>

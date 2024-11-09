@@ -233,6 +233,23 @@
             padding-left: 0.3rem; /* Optional padding for extra space */
         }
 
+        .course-select {
+            width: 50%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        
+        .course-select option {
+            color: #333; /* Ensures option text color is set */
+            background-color: #ffffff; /* Ensures option background color */
+        }
+        
     </style>
 </head>
 <body>
@@ -258,10 +275,13 @@
     </div>
 
     <div class="main-container">
-        <h1 id="courseHeader"></h1>
+        <h1 id="courseHeader">Create SLAP Announcement</h1>
         <form id="slapForm">
             <input type="text" id="title" name="title" placeholder="SLAP Title" required>
             <textarea id="slap" name="slap" rows="10" cols="50" placeholder="Enter your Announcement here..." required></textarea>
+            <select id="courseSelect" class="course-select">
+                
+            </select>
             <div class="button-group">
                 <button type="submit" id="createButton">Create SLAP</button>
                 <button type="button" id="cancelButton">Cancel Creation</button>
@@ -296,15 +316,24 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            const courseID = parseInt(getQueryParam('courseID'),10);
             const courses = JSON.parse(localStorage.getItem("courses")) || [];
-        
-            const course = courses.find(course => course.courseID === courseID);
-            console.log(course);
-            const header = document.getElementById('courseHeader');
-            if (course) {
-                header.textContent = `Create SLAP Announcement For ${course.courseCode}`;
-            }
+            const currentUser = localStorage.getItem('currentUser');
+            const instructorCourses = courses.filter(course => course.profSlapID === currentUser);
+            const courseSelect = document.getElementById("courseSelect");
+
+            // Add "All Courses" option
+            const allCoursesOption = document.createElement("option");
+            allCoursesOption.value = "all";
+            allCoursesOption.textContent = "All Courses";
+            courseSelect.appendChild(allCoursesOption);
+
+            // Populate dropdown with instructor courses
+            instructorCourses.forEach(course => {
+                const option = document.createElement("option");
+                option.value = course.courseID; // Use a unique ID or identifier
+                option.textContent = course.courseCode + ": " + course.title; // Display the course title
+                courseSelect.appendChild(option);
+            });
         });
 
         document.getElementById('slapForm').addEventListener('submit', function(event) {
@@ -316,30 +345,44 @@
 
             const maxID = alerts.reduce((max, alert) => Math.max(max, alert.ID), -1);
 
-            const courseID = parseInt(getQueryParam('courseID'),10);
+            const courseSelect = document.getElementById("courseSelect"); // Get the select element
+            const selectedCourseID = courseSelect.value; 
+
+            let selectedCourses = [];
+
+            // If "All Courses" is selected, populate selectedCourses with all instructor courses
+            if (selectedCourseID === "all") {
+                const courses = JSON.parse(localStorage.getItem("courses")) || [];
+                const userID = localStorage.getItem('currentUser');
+                const instructorCourses = courses.filter(course => course.profSlapID === userID);
+                selectedCourses = instructorCourses.map(course => ({ courseID: course.courseID }));
+            } else {
+                // If a specific course is selected, populate selectedCourses with that course ID
+                selectedCourses = [{ courseID: parseInt(selectedCourseID, 10) }];
+            }
 
             alerts.push({
                 ID: maxID + 1,
                 title: title,
                 text: slap_text,
                 global: false,
-                courseID: courseID
+                instructor_only: false,
+                courses: selectedCourses
             });
 
             localStorage.setItem('slapAlerts', JSON.stringify(alerts));
 
-            alert(`SLAP ${maxID + 1} created. Returning to Course Dashboard.`);
-            returnToCourse();
+            alert(`SLAP ${maxID + 1} created. Returning to Instructor Dashboard.`);
+            returnToDashboard();
 
         });
 
         document.getElementById('cancelButton').addEventListener('click', function() {
-            returnToCourse();
+            returnToDashboard();
         });
         
-        function returnToCourse() {
-            const courseID = parseInt(getQueryParam('courseID'),10);
-            window.location.href = `course_dashboard.html?courseID=${courseID}`;
+        function returnToDashboard() {
+            window.location.href = `instructor_dashboard.html`;
         }
 
         document.getElementById('logoButton').addEventListener('click', function() {
@@ -357,11 +400,6 @@
                     break;
             }
         });
-        // Helper function to get query parameter by name
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
-        }
     </script>
 </body>
 </html>
