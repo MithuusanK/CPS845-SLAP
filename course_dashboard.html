@@ -319,7 +319,6 @@
     <div class="main-container">
         <div class="button-group">
             <button class="dash-button" id="createProjectButton">New Project</button>
-            <button class="dash-button" id="createSLAPButton">Create SLAP</button>
             <button class="dash-button" id="editProjectButton">Edit Project</button>
             <button class="dash-button" id="viewMessageButton">View Messages</button>
             <button class="dash-button" id="sendMessageButton">Send Messages</button>
@@ -497,11 +496,6 @@
 
         document.getElementById('createProjectButton').addEventListener('click', function() {
             return;
-        });
-
-        document.getElementById('createSLAPButton').addEventListener('click', function() {
-            const courseID = getQueryParam('courseID');
-            window.location.href = `task20.html?courseID=${courseID}`;
         });
         document.getElementById('editProjectButton').addEventListener('click', function() {
             window.location.href = 'task14.html';
