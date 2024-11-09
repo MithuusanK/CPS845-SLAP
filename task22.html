@@ -233,6 +233,40 @@
             padding-left: 0.3rem; /* Optional padding for extra space */
         }
 
+        .radio-toolbar {
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 8px 0 rgba(0, 0, 0, 0.19);
+            height: 40px;
+            width: 50%;
+            display: flex;
+            overflow: hidden;
+            border-radius: 10px;
+            margin: 2% auto;
+            margin-bottom: 3%;
+          }
+          
+          .radio-toolbar label {
+            width: 100%;
+            display: inline-block;
+            background-color: #FFFFFF;
+            margin-left: -30px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-align: center;
+          }
+          
+          .radio-toolbar label:hover {
+            background-color: #B4B4B4;
+          }
+          
+          .radio-toolbar input[type="radio"]:checked+label {
+            background-color: #2162da;
+            color: white;
+          }
+          
+          input[type="radio"] {
+            visibility: hidden;
+          }
+
     </style>
 </head>
 <body>
@@ -258,10 +292,18 @@
     </div>
 
     <div class="main-container">
-        <h1>Create Global SLAP Announcement</h1>
+        <h1>Create SLAP Announcement</h1>
         <form id="slapForm">
             <input type="text" id="title" name="title" placeholder="SLAP Title" required>
             <textarea id="slap" name="slap" rows="10" cols="50" placeholder="Enter your Announcement here..." required></textarea>
+
+            <div class="radio-toolbar">
+                <input type="radio" id="global" name="slap-type" value="global" checked=True>
+                <label for="global">Global</label>
+                <input type="radio" id="instructor" name="slap-type" value="instructor">
+                <label for="instructor">Only Instructors</label>
+            </div>
+
             <div class="button-group">
                 <button type="submit" id="createButton">Create SLAP</button>
                 <button type="button" id="cancelButton">Cancel Creation</button>
@@ -295,13 +337,6 @@
             }
         }
 
-        //localStorage.removeItem('slapAlerts');
-        if (!localStorage.getItem('slapAlerts')) {
-            const initialAlerts = [
-                { ID: 0, title: "Test", text: "Placeholder", global: true, courseID: 0 }
-            ];
-            localStorage.setItem('slapAlerts', JSON.stringify(initialAlerts));
-        }
         document.getElementById('slapForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent form submission
             const title = document.getElementById('title').value;
@@ -311,12 +346,17 @@
 
             const maxID = alerts.reduce((max, alert) => Math.max(max, alert.ID), -1);
 
+            const selectedRadio = document.querySelector('input[name="slap-type"]:checked');
+            const isGlobal = selectedRadio === "global"
+            const isInstructor = selectedRadio === "instructor"
+            
             alerts.push({
                 ID: maxID + 1,
                 title: title,
                 text: slap_text,
-                global: true,
-                courseID: []
+                global: isGlobal,
+                instructor_only: isInstructor,
+                courses: []
             });
 
             localStorage.setItem('slapAlerts', JSON.stringify(alerts));

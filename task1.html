@@ -246,8 +246,9 @@
         //localStorage.removeItem('slapAlerts');
         if (!localStorage.getItem('slapAlerts')) {
             const initialAlerts = [
-                { ID: 0, title: "Test", text: "Placeholder", global: true, courseID: 0 }
-            ];
+                { ID: 0, title: "Test", text: "Placeholder", global: true, instructor_only: false, courses : [{}]},
+                { ID: 1, title: "Test", text: "Placeholder", global: false, instructor_only: false, courses : [{courseID: 0}, {courseID: 1}]}
+            ]
             localStorage.setItem('slapAlerts', JSON.stringify(initialAlerts));
         }
 
