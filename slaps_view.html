@@ -6,6 +6,7 @@
     <title>SLAP Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
+        /* Login */
         * {
             margin: 0;
             padding: 0;
@@ -96,6 +97,26 @@
             background-color: #f1f1f1;
         }
 
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #e0e7ff, #f8fafc);
+            flex-direction: column; 
+        }
+
+        .logo {
+            font-size: 80px;
+            font-weight: 900;
+            letter-spacing: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1f3c88;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
         .letter {
             transition: transform 1s ease;
         }
@@ -105,15 +126,6 @@
             animation: rotateEffect 1s ease-in-out forwards;
             color: #007bff;
             text-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
-        }
-
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #e0e7ff, #f8fafc);
         }
 
         @keyframes rotateEffect {
@@ -135,13 +147,16 @@
         .main-container {
             background-color: #fff;
             padding: 2rem;
-            padding-top: 0%;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             max-width: 1600px;
             width: 100%;
             text-align:center;
             margin-top:20px;
+            display: flex;               /* Apply flexbox */
+            justify-content: center;
+            gap: 20px;
+            flex-direction: row; 
         }
 
         h1 {
@@ -151,20 +166,6 @@
             color: #333;
         }
 
-        h2 {
-            margin-bottom: 1rem;
-            text-align: center;
-            font-size: 2.1rem;
-            color: #333;
-            font-weight: 400;
-        }
-
-        /* Button Group */
-        .button-group {
-            display: flex;
-            justify-content: center;
-        }
-
         /* Error Message */
         .error-message {
             color: red;
@@ -172,65 +173,71 @@
             margin-bottom: 1rem;
             text-align: center;
         }
-
-        #courseContainer {
-            display: flex; 
-            flex-wrap: wrap;
+        
+        .button-group {
+            width:60%;
+            display: flex;
             flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-            gap: 1rem;
-            width: 100%;
-            border-radius: 10px;
-            padding: 2%;
-            padding-top: 0%;
-        }
-
-        #courseButtonsContainer {
-            display: flex; /* Flex container for buttons */
-            flex-wrap: wrap; /* Allow wrapping to new lines if needed */
-            justify-content: center; /* Center buttons */
-            width: 100%; /* Full width */
-        }
-
-        .dash-button {
-            width: 250px;
-            height: 150px;
-            background-color: #ffffff94;
-            color: rgb(0, 0, 0);
-            border: none;
-            border-radius: 10px;
-            font-size: 20px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 10px;
+            gap:20px;
         }
         
-        .dash-button:hover {
-            background-color: #00000049;
-            color: rgb(255, 255, 255);
-        }
-
-        .option-button {
-            width: 250px;
-            height: 150px;
+        .slap-button {
+            font-size: 20px;
+            width:100%;
+            border:none;
             background-color: #e3e3f7;
-            color: rgb(0, 0, 0);
-            border: none;
-            border-radius: 10px;
-            font-size: 20px;
             cursor: pointer;
-            display: flex;
+        }
+
+        .slap-button:hover {
+            color:#00a2ff;
+        }
+
+        .slaps-view {
+            gap:5px;
+            margin:10px;
+            width: 50%;
+        }
+
+        h2 {
+            margin-bottom:3%;
+        }
+
+        .overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
             justify-content: center;
             align-items: center;
-            margin: 10px;
+            z-index: 1000; /* Ensure it's above other content */
         }
         
-        .option-button:hover {
-            background-color: #f4f4ff;
+        /* Overlay content box */
+        .overlay-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 500px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .close-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #1431b1;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .close-button:hover {
+            background-color: #0e2086;
         }
 
     </style>
@@ -256,19 +263,17 @@
             </div>
         </div>
     </div>
-
-    <h1 id="welcomeHeader"></h1>
     <div class="main-container">
-        <div id="courseContainer">
-            <h2>My Courses</h2>
-            <div id="courseButtonsContainer"></div>
+        <div class="slaps-view">
+            <h2>Your SLAPs</h2>
         </div>
-        <h2>Options</h2>
-        <div class="button-group">
-            <button class="option-button" id="viewSlapsButton">View SLAPs</button>
-            <button class="option-button" id="createSLAPButton">Create SLAPs</button>
-            <button class="option-button" id="viewMessageButton">View Messages</button>
-            <button class="option-button" id="sendMessageButton">Send Messages</button>
+    </div>
+
+    <div id="slap-overlay" class="overlay">
+        <div class="overlay-content">
+            <h2 id="slap-title"></h2>
+            <p id="slap-text"></p>
+            <button onclick="closeOverlay()" class="close-button">Close</button>
         </div>
     </div>
 
@@ -297,53 +302,57 @@
                 }
             }
         }
-
-        // Run this when the page loads
         document.addEventListener("DOMContentLoaded", function() {
-            const currentUser = localStorage.getItem('currentUser'); // Retrieve currentUser
-            const welcomeHeader = document.getElementById('welcomeHeader');
-        
-            if (currentUser) {
-                welcomeHeader.textContent = `Welcome, ${currentUser}`;
-            } else {
-                welcomeHeader.textContent = "Welcome, Instructor";
-            }
-
-            const courseContainer = document.getElementById("courseButtonsContainer");
+            const currentUser = localStorage.getItem("currentUser");
+            const userType = localStorage.getItem("userType");
             const courses = JSON.parse(localStorage.getItem("courses")) || [];
-        
-            // Filter courses for the current instructor
-            const instructorCourses = courses.filter(course => course.profSlapID === currentUser);
-
-            instructorCourses.forEach(course => {
-                const courseWrapper = document.createElement("div");
-                courseWrapper.style.backgroundColor = course.colour
-                courseWrapper.style.borderRadius = '10px';
-
-                const courseButton = document.createElement("button");
-                courseButton.className = "dash-button";
-
-                const textContainer = document.createElement("div");
-                const courseCode = document.createElement("div");
-                courseCode.textContent = course.courseCode;
-                courseCode.style.fontWeight = 'bold';
-                const courseTitle = document.createElement("div");
-                courseTitle.textContent = course.title;
-
-                textContainer.appendChild(courseCode);
-                textContainer.appendChild(courseTitle);
-                courseButton.appendChild(textContainer);
-                courseWrapper.appendChild(courseButton);
-                courseContainer.appendChild(courseWrapper);
-                document.getElementById("courseContainer").appendChild(courseWrapper);
+            const slaps = JSON.parse(localStorage.getItem("slapAlerts")) || [];
+            const courseRegistration = JSON.parse(localStorage.getItem("studentCourseRegistration")) || [];
             
-                // Set up click event to navigate to the course dashboard
-                courseButton.addEventListener("click", function() {
-                    window.location.href = `course_dashboard.html?courseID=${course.courseID}`;
-                });
+            let relevantSlaps = slaps.filter(slap => {
+                if (userType === "instructor") {
+                    // Instructors see all global and instructor-only alerts
+                    return slap.global || slap.instructor_only;
+                } else {
+                    // Students see all global alerts and alerts related to their courses
+                    return slap.global || slap.courses.some(course => 
+                        courseRegistration.some(reg => reg.studentID === currentUser && reg.courseID === course.courseID)
+                    );
+                }
+            });
+            const slapsView = document.querySelector('.slaps-view');
+            // Populate the slaps-view with filtered SLAPs
+            relevantSlaps.forEach(slap => {
+                const slapButton = document.createElement('button');
+                slapButton.className = 'slap-button';
+                slapButton.innerText = slap.title;
+                slapButton.onclick = () => showSlapOverlay(slap);
+                slapsView.appendChild(slapButton);
             });
 
         });
+
+        function showSlapOverlay(slap) {
+            const slapOverlay = document.getElementById('slap-overlay');
+            const slapTitle = document.getElementById('slap-title');
+            const slapText = document.getElementById('slap-text');
+            slapTitle.innerText = slap.title;
+            slapText.innerText = slap.text;
+        
+            slapOverlay.style.display = 'flex';
+        
+            // Close overlay on click outside
+            slapOverlay.onclick = function(event) {
+                if (event.target === slapOverlay) {
+                    slapOverlay.style.display = 'none';
+                }
+            };
+        }
+
+        function closeOverlay() {
+            const slapOverlay = document.getElementById('slap-overlay');
+            slapOverlay.style.display = 'none';
+        }
 
         document.getElementById('logoButton').addEventListener('click', function() {
             const userType = localStorage.getItem('userType'); 
@@ -358,19 +367,6 @@
                     window.location.href = "admin_dashboard.html"
                     break;
             }
-        });
-
-        document.getElementById('createSLAPButton').addEventListener('click', function() {
-            window.location.href = `task20.html`;
-        });
-        document.getElementById('viewMessageButton').addEventListener('click', function() {
-            window.location.href = 'task3.html';
-        });
-        document.getElementById('sendMessageButton').addEventListener('click', function() {
-            window.location.href = 'task4.html';
-        });
-        document.getElementById('viewSlapsButton').addEventListener('click', function() {
-            window.location.href = 'slaps_view.html';
         });
     </script>
 </body>
