@@ -8,7 +8,6 @@
   5. James Tampu
 
 
-
 **GOULD STREET UNIVERSITY PORTAL**
 
 Welcome to the Gould Street University Portal! This project aims to create a centralized portal for Gould Street University that simplifies project management, submission tracking, and communication for students, instructors, and administrators and more.
