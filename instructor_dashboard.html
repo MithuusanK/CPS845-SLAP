@@ -162,7 +162,7 @@
         /* Button Group */
         .button-group {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
         }
 
         /* Error Message */
@@ -176,10 +176,11 @@
         #courseContainer {
             display: flex; 
             flex-wrap: wrap;
-            flex-direction: column;
+            flex-direction: row;
             justify-content: center;
             align-items: center;
             margin-top: 20px;
+            gap: 1rem;
             width: 100%;
             border-radius: 10px;
             padding: 2%;
@@ -213,6 +214,25 @@
             color: rgb(255, 255, 255);
         }
 
+        .option-button {
+            width: 250px;
+            height: 150px;
+            background-color: #e3e3f7;
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+        }
+        
+        .option-button:hover {
+            background-color: #f4f4ff;
+        }
+
     </style>
 </head>
 <body>
@@ -242,6 +262,18 @@
         <div id="courseContainer">
             <h2>My Courses</h2>
             <div id="courseButtonsContainer"></div>
+        </div>
+        <h2>Options</h2>
+        <div class="button-group">
+            <button class="option-button" id="viewSlapsButton">View SLAPs</button>
+            <button class="option-button" id="createSLAPButton">Create SLAPs</button>
+            <button class="option-button" id="viewMessageButton">View Messages</button>
+            <button class="option-button" id="sendMessageButton">Send Messages</button>
+            <button class="option-button" id="studentActivityButton">View Student Activity</button>
+            <button class="option-button" id="uploadInstructionDocs">Upload Instruction Documents</button>
+            <button class="option-button" id="createProjectGroups">Create Project Groups</button>
+            <button class="option-button" id="viewProjectGroups">View Project Groups</button>
+            <button class="option-button" id="submitGroupEvals">Submit Group Evaluations</button>
         </div>
     </div>
 
@@ -317,9 +349,6 @@
             });
 
         });
-        document.getElementById('coursesButton').addEventListener('click', function() {
-            window.location.href = 'courses_dashboard.html';
-        });
 
         document.getElementById('logoButton').addEventListener('click', function() {
             const userType = localStorage.getItem('userType'); 
@@ -334,6 +363,34 @@
                     window.location.href = "admin_dashboard.html"
                     break;
             }
+        });
+
+        document.getElementById('createSLAPButton').addEventListener('click', function() {
+            window.location.href = `task20.html`;
+        });
+        document.getElementById('viewMessageButton').addEventListener('click', function() {
+            window.location.href = 'task3.html';
+        });
+        document.getElementById('sendMessageButton').addEventListener('click', function() {
+            window.location.href = 'task4.html';
+        });
+        document.getElementById('viewSlapsButton').addEventListener('click', function() {
+            window.location.href = 'slaps_view.html';
+        });
+        document.getElementById('studentActivityButton').addEventListener('click', function() {
+            window.location.href = 'task19.html';
+        });
+        document.getElementById('uploadInstructionDocs').addEventListener('click', function() {
+            window.location.href = 'task17.html';
+        });
+        document.getElementById('createProjectGroups').addEventListener('click', function() {
+            window.location.href = 'task15.html';
+        });
+        document.getElementById('viewProjectGroups').addEventListener('click', function() {
+            window.location.href = 'task16.html';
+        });
+        document.getElementById('submitGroupEvals').addEventListener('click', function() {
+            window.location.href = 'task18.html';
         });
     </script>
 </body>
