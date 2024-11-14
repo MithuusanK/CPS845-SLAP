@@ -25,7 +25,7 @@
             text-align: center;
         }
 
-        .assignment-item {
+        .project-item {
             margin: 1rem 0;
             padding: 1rem;
             background: #fafafa;
@@ -33,10 +33,17 @@
             text-align: left;
         }
 
-        .assignment-link {
+        .project-link {
             color: #007bff;
             text-decoration: none;
             cursor: pointer;
+        }
+
+        .back-link {
+            margin-top: 20px;
+            display: inline-block;
+            text-decoration: none;
+            color: #007bff;
         }
     </style>
 </head>
@@ -44,51 +51,55 @@
     <div class="container">
         <h1>Assignments for <span id="courseCode"></span></h1>
         
-        <div id="assignmentList">
-            
+        <div id="projectList">
+            <!-- Assignment list will be dynamically inserted here -->
         </div>
+        
         <a href="student_dashboard.html" class="back-link">Back to Courses</a>
     </div>
 
     <script>
-        
-        const courseCode = localStorage.getItem("selectedCourse");
-        document.getElementById("courseCode").textContent = courseCode;
+        // Get the selected course code and ID from local storage
+        const selectedCourseCode = localStorage.getItem("selectedCourse");
+        const courses = JSON.parse(localStorage.getItem("courses")) || [];
+        const selectedCourse = courses.find(course => course.courseCode === selectedCourseCode);
     
-        
-        const assignmentsData = {
-            "CPS101": [
-                { name: "Assignment 1: Basic Programming", id: "CPS101_A1" },
-                { name: "Assignment 2: Data Structures", id: "CPS101_A2" }
-            ],
-            "MTH202": [
-                { name: "Assignment 1: Calculus Problems", id: "MTH202_A1" },
-                { name: "Assignment 2: Integration Techniques", id: "MTH202_A2" }
-            ]
-        
-        };
+        if (selectedCourse) {
+            document.getElementById("courseCode").textContent = selectedCourse.title;
+            const courseID = selectedCourse.courseID;
     
-        
-        const assignmentList = document.getElementById("assignmentList");
-        const assignments = assignmentsData[courseCode] || [];
-        
-        assignments.forEach(assignment => {
-            const assignmentItem = document.createElement("div");
-            assignmentItem.classList.add("assignment-item");
+            // Retrieve assignments for the selected course
+            const projects = JSON.parse(localStorage.getItem('projects')) || [];
+            const courseProjects = projects.filter(project => project.courseID === courseID);
     
-            const assignmentLink = document.createElement("span");
-            assignmentLink.textContent = assignment.name;
-            assignmentLink.classList.add("assignment-link");
-            assignmentLink.onclick = () => viewAssignment(assignment.id);
+            const projectList = document.getElementById("projectList");
     
-            assignmentItem.appendChild(assignmentLink);
-            assignmentList.appendChild(assignmentItem);
-        });
+            if (courseProjects.length > 0) {
+                courseProjects.forEach(project => {
+                    const projectItem = document.createElement("div");
+                    projectItem.classList.add("project-item");
+    
+                    const projectLink = document.createElement("span");
+                    projectLink.textContent = `${project.name} - Due: ${project.dueDate}`;
+                    projectLink.classList.add("project-link");
+                    projectLink.onclick = () => viewAssignment(project.ID);
+    
+                    projectItem.appendChild(projectLink);
+                    projectList.appendChild(projectItem);
+                });
+            } else {
+                projectList.innerHTML = "<p>No assignments available for this course.</p>";
+            }
+        } else {
+            document.getElementById("courseCode").textContent = "Course Not Found";
+            document.getElementById("projectList").innerHTML = "<p>No course selected or course not found.</p>";
+        }
     
         function viewAssignment(assignmentId) {
             localStorage.setItem("selectedAssignment", assignmentId);
             window.location.href = "assignment.html";
         }
     </script>
+    
 </body>
 </html>

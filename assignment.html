@@ -3,19 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gould Street University - Assignment</title>
+    <title>Gould Street University - Project</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body {
+        /* General Body and Font Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #e0e7ff, #f8fafc);
+        }
+
+        body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
+            background: linear-gradient(135deg, #e0e7ff, #f8fafc);
         }
 
+        /* Container Styles */
         .container {
             background-color: #fff;
             padding: 2rem;
@@ -29,18 +36,19 @@
         h1 {
             font-size: 1.8rem;
             color: #333;
+            margin-bottom: 1rem;
         }
 
-        .back-link {
-            display: inline-block;
-            margin-top: 1.5rem;
-            color: #007bff;
-            text-decoration: none;
+        #projectDueDate {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 1.5rem;
         }
 
+        /* Document List Styles */
         .document-list {
-            margin-top: 1.5rem;
             text-align: left;
+            margin-bottom: 1.5rem;
         }
 
         .document-item {
@@ -61,25 +69,8 @@
             background-color: #0056b3;
         }
 
-   
-        .check-submission-button, .view-submission-history-button, .view-evaluation-button {
-            display: none;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 0.5rem 1rem;
-            margin-top: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .check-submission-button:hover, .view-submission-history-button:hover, .view-evaluation-button:hover {
-            background-color: #0056b3;
-        }
-
-      
-        .latest-submission, .submission-list, .evaluation-section {
+        /* Submission and Evaluation Sections */
+        .latest-submission, .evaluation-section {
             display: none;
             text-align: left;
             margin-top: 1.5rem;
@@ -92,34 +83,60 @@
             margin-top: 0.5rem;
             color: #333;
         }
+
+        /* Button Styles */
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+
+        .action-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            flex: 1;
+        }
+
+        .action-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Back Link */
+        .back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Assignment Details</h1>
-        <p><strong id="assignmentTitle"></strong></p>
-        <p id="assignmentDescription"></p>
+        <h1>Project Details</h1>
+        <p><strong id="projectTitle"></strong></p>
+        <p id="projectDueDate"></p>
 
         <div class="document-list" id="documentList">
-            
+            <!-- Document buttons will be dynamically generated here -->
         </div>
 
-        <button class="check-submission-button" id="checkSubmissionButton">Check Submission</button>
-        <button class="view-submission-history-button" id="viewSubmissionHistoryButton">View Submission History</button>
-        <button class="view-evaluation-button" id="viewEvaluationButton">View Evaluation</button>
-
-       
+        <!-- Section for displaying submission details -->
         <div class="latest-submission" id="latestSubmission">
             <h2>Latest Submission</h2>
             <div class="submission-item" id="latestSubmissionContent">No submission found.</div>
         </div>
 
-        
-        <div class="submission-list" id="submissionHistory">
-            <h2>Submission History</h2>
-        </div>
-
-        
+        <!-- Section for displaying evaluation details -->
         <div class="evaluation-section" id="evaluationSection">
             <h2>Evaluation</h2>
             <div class="evaluation-content" id="evaluationContent">
@@ -128,162 +145,84 @@
             </div>
         </div>
 
+        <div class="button-group">
+            <!-- View Submission Details button -->
+            <button class="action-button" id="viewSubmissionButton">View Submission Details</button>
+
+            <!-- View Evaluation button -->
+            <button class="action-button" id="viewEvaluationButton">View Evaluation</button>
+        </div>
+
         <a href="course_details.html" class="back-link">Back to Course</a>
     </div>
 
     <script>
-       
-        const assignmentsDetails = {
-            "CPS101_A1": {
-                title: "Basic Programming",
-                description: "Solve problems using basic programming constructs.",
-                documents: [
-                    { name: "Assignment 1 Instructions", url: "docs/CS101_A1_Instructions.pdf" },
-                    { name: "Sample Solutions", url: "docs/CS101_A1_Solutions.pdf" }
-                ]
-            },
-            "CPS101_A2": {
-                title: "Data Structures",
-                description: "Implement various data structures in Java.",
-                documents: [
-                    { name: "Assignment 2 Instructions", url: "docs/CS101_A2_Instructions.pdf" },
-                    { name: "Data Structure Examples", url: "docs/CS101_A2_Examples.pdf" }
-                ]
-            },
-            "MTH202_A1": {
-                title: "Calculus Problems",
-                description: "Complete the calculus problem set.",
-                documents: [
-                    { name: "Calculus Assignment Instructions", url: "docs/MATH202_A1_Instructions.pdf" },
-                    { name: "Practice Problems", url: "docs/MATH202_A1_Practice.pdf" }
-                ]
-            }
-        };
+        // Retrieve the selected assignment ID and current user from localStorage
+        const selectedAssignmentId = localStorage.getItem("selectedAssignment");
+        const currentUser = localStorage.getItem("currentUser");
 
-        document.getElementById("viewEvaluationButton").onclick = async () => {
-            try {
-                const response = await fetch("/get-assignment-evaluations");
-                const submissions = await response.json();
+        // Retrieve projects, evaluations, and latest submissions from localStorage
+        const projects = JSON.parse(localStorage.getItem("projects")) || [];
+        const evaluations = JSON.parse(localStorage.getItem("evaluations")) || {};
+        const latestSubmissions = JSON.parse(localStorage.getItem("latestSubmissions")) || {};
 
-                const assignmentId = localStorage.getItem("selectedAssignment");
-                const submission = submissions.find(item => item.Assignment_Submission_ID === assignmentId);
+        // Find the selected project details
+        const project = projects.find(p => p.ID == selectedAssignmentId);
 
-                const latestSubmissionContent = document.getElementById("latestSubmissionContent");
-                if (submission){
-                    latestSubmissionContent.innerHTML = `
-                        <strong>File Name:</strong> ${submission.originalFilename}<br>
-                        <strong>Submission Time:</strong> ${submission.Submussion_Date_Time}
-                    `;
-                }
-                else{
-                    latestSubmissionContent.innerHTML = "No submission found.";
-                }
+        if (project) {
+            // Display project title and due date
+            document.getElementById("projectTitle").textContent = project.name || "Project Not Found";
+            document.getElementById("projectDueDate").textContent = `Due Date: ${project.dueDate}`;
 
-                document.getElementById("latestSubmission").styleDisplay = "block";
+            // Generate document buttons for assignment details
+            const documentList = document.getElementById("documentList");
+            const assignmentDetails = JSON.parse(localStorage.getItem("assignmentsDetails")) || {};
+            const assignment = assignmentDetails[selectedAssignmentId];
 
-            }catch (error){
-                console.error("Error fetching evaluations:", error);
-                docuement.getElementById("latestSubmissionContent").textContent = "Failed to load submission details"
-            }
-        }
-       
-        const evaluations = {
+            if (assignment) {
+                assignment.documents.forEach(doc => {
+                    const docItem = document.createElement("div");
+                    docItem.classList.add("document-item");
 
-
-            "CPS101_A1": {
-                grade: "85%",
-                comments: "Good job overall, but make sure to optimize your code for better efficiency."
-            },
-            "CPS101_A2": {
-                grade: "78%",
-                comments: "Solid understanding of data structures, but work on edge cases."
-            },
-            "MTH202_A1": {
-                grade: "92%",
-                comments: "Excellent work on calculus problems. Keep up the good understanding!"
-            }
-        };
-
-        
-        const assignmentId = localStorage.getItem("selectedAssignment");
-        const assignment = assignmentsDetails[assignmentId] || {};
-
-   
-        document.getElementById("assignmentTitle").textContent = assignment.title || "Assignment Not Found";
-        document.getElementById("assignmentDescription").textContent = assignment.description || "";
-
-        
-        const documentList = document.getElementById("documentList");
-        if (assignment.documents) {
-            assignment.documents.forEach(doc => {
-                const docItem = document.createElement("div");
-                docItem.classList.add("document-item");
-                const docButton = document.createElement("button");
-                docButton.textContent = `View ${doc.name}`;
-                docButton.onclick = () => {
-                    window.open(doc.url, "_blank");
-                };
-                docItem.appendChild(docButton);
-                documentList.appendChild(docItem);
-            });
-        }
-
-        const latestSubmissions = {
-            "CPS101_A1": {
-                title: "CPS101_A1 Submission",
-                date: "2024-10-30",
-                status: "Submitted"
-            },
-            "CPS101_A2": {
-                title: "CPS101_A2 Submission",
-                date: "2024-10-31",
-                status: "Not Submitted"
-            },
-            "MTH202_A1": {
-                title: "MTH202_A1 Submission",
-                date: "2024-10-29",
-                status: "Submitted"
-            }
-        };
-
-       
-        document.getElementById("checkSubmissionButton").onclick = () => {
-           
-            const latestSubmission = latestSubmissions[assignmentId] || null;
-
-          
-            const latestSubmissionContent = document.getElementById("latestSubmissionContent");
-            if (latestSubmission) {
-                latestSubmissionContent.innerHTML = `
-                    <strong>${latestSubmission.title}</strong><br>
-                    Date: ${latestSubmission.date}<br>
-                    Status: ${latestSubmission.status}
-                `;
+                    const docButton = document.createElement("button");
+                    docButton.textContent = `View ${doc.name}`;
+                    docButton.onclick = () => {
+                        window.open(doc.url, "_blank");
+                    };
+                    docItem.appendChild(docButton);
+                    documentList.appendChild(docItem);
+                });
             } else {
-                latestSubmissionContent.textContent = "No submission found.";
+                console.log("Assignment details not found for selectedAssignmentId:", selectedAssignmentId);
             }
-            document.getElementById("latestSubmission").style.display = "block"; 
-        };
 
+            // Set up View Submission Details button
+            document.getElementById("viewSubmissionButton").onclick = () => {
+                if (latestSubmissions[currentUser] && latestSubmissions[currentUser][selectedAssignmentId]) {
+                    const latestSubmission = latestSubmissions[currentUser][selectedAssignmentId];
+                    document.getElementById("latestSubmissionContent").innerHTML = `
+                        <strong>${latestSubmission.title}</strong><br>
+                        Date: ${latestSubmission.date}<br>
+                        Status: ${latestSubmission.status}
+                    `;
+                    document.getElementById("latestSubmission").style.display = "block";
+                } else {
+                    console.log("No submission found for user:", currentUser, "and assignment:", selectedAssignmentId);
+                    document.getElementById("latestSubmissionContent").textContent = "No submission found.";
+                }
+            };
 
-
-      
-        const userRole = localStorage.getItem("userRole") || "student"; 
-
-        
-        if (userRole === "student") {
-            document.getElementById("checkSubmissionButton").style.display = "inline-block";
-            document.getElementById("viewEvaluationButton").style.display = "inline-block";
-        } else if (userRole === "instructor") {
-            document.getElementById("viewSubmissionHistoryButton").style.display = "inline-block";
+            // Set up View Evaluation button
+            document.getElementById("viewEvaluationButton").onclick = () => {
+                const userEvaluations = evaluations[currentUser] || {};
+                const evaluation = userEvaluations[selectedAssignmentId] || { grade: "N/A", comments: "No evaluation available." };
+                document.getElementById("evaluationGrade").textContent = evaluation.grade;
+                document.getElementById("evaluationComments").textContent = evaluation.comments;
+                document.getElementById("evaluationSection").style.display = "block";
+            };
+        } else {
+            document.getElementById("projectTitle").textContent = "Project Not Found";
         }
-
-        document.getElementById("viewEvaluationButton").onclick = () => {
-            const evaluation = evaluations[assignmentId] || { grade: "N/A", comments: "No evaluation available." };
-            document.getElementById("evaluationGrade").textContent = evaluation.grade;
-            document.getElementById("evaluationComments").textContent = evaluation.comments;
-            document.getElementById("evaluationSection").style.display = "block";
-        };
     </script>
 </body>
 </html>

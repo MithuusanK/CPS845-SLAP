@@ -220,7 +220,7 @@
             localStorage.setItem('slapCredentials', JSON.stringify(initialCredentials));
         }
 
-        //localStorage.removeItem('projects');
+        localStorage.removeItem('projects');
         if (!localStorage.getItem('projects')) {
             const projects = [
                 { name: "Entropy Theory Project", ID: 0, courseID: 0, dueDate: "2024-10-31"},
@@ -243,6 +243,122 @@
             localStorage.setItem('projects', JSON.stringify(projects));
         }
 
+        localStorage.removeItem('assignmentsDetails');
+        // Assignment details and documents for each project
+        if (!localStorage.getItem('assignmentsDetails')) {
+            const assignmentsDetails = {
+                0: {
+                    title: "Entropy Theory Project",
+                    description: "Explore entropy in thermodynamics.",
+                    documents: [
+                        { name: "Assignment Details", url: "docs/Entropy_Theory_Project_Assignment_Details.pdf" },
+                        { name: "Sample Solution", url: "docs/Entropy_Theory_Project_Sample_Solution.pdf" }
+                    ]
+                },
+                1: {
+                    title: "Enthalpy Analysis Project",
+                    description: "Analyze enthalpy changes.",
+                    documents: [
+                        { name: "Assignment Details", url: "docs/Enthalpy_Analysis_Project_Assignment_Details.pdf" },
+                        { name: "Sample Solution", url: "docs/Enthalpy_Analysis_Project_Sample_Solution.pdf" }
+                    ]
+                },
+                4: {
+                    title: "Kinematics Simulation Project",
+                    description: "Simulate motion scenarios.",
+                    documents: [
+                        { name: "Assignment Details", url: "docs/Kinematics_Simulation_Project_Assignment_Details.pdf" },
+                        { name: "Sample Solution", url: "docs/Kinematics_Simulation_Project_Sample_Solution.pdf" }
+                    ]
+                }
+            };
+            localStorage.setItem('assignmentsDetails', JSON.stringify(assignmentsDetails));
+        }
+
+        // Clear existing evaluations to ensure the correct structure
+        localStorage.removeItem('evaluations');
+
+        if (!localStorage.getItem('evaluations')) {
+            const evaluations = {
+                "student123": {
+                    "0": {
+                        grade: "A",
+                        comments: "Excellent work on entropy analysis and clear explanations."
+                    },
+                    "1": {
+                        grade: "B+",
+                        comments: "Good effort, needs more detail in calculations."
+                    },
+                    "4":{
+                        grade: "C-",
+                        comments: "The simulation was exeucted incorrectly. The analysis was still correct."
+                    }
+                },
+                "student456": {
+                    "0": {
+                        grade: "B-",
+                        comments: "Good work on entropy analysis and clear explanations."
+                    },
+                    "1": {
+                        grade: "F",
+                        comments: "All calculations were incorrect."
+                    },
+                    "4":{
+                        grade: "A+",
+                        comments: "The simulation was exeucted perfectly. Amazing analysis with great attention to detail."
+                    }
+                }
+            };
+            localStorage.setItem('evaluations', JSON.stringify(evaluations));
+        }
+
+
+        // Clear existing latestSubmissions to ensure the correct structure
+        localStorage.removeItem('latestSubmissions');
+
+        if (!localStorage.getItem('latestSubmissions')) {
+            const latestSubmissions = {
+                "student123": {
+                    "0": {
+                        "title": "Final Submission for Entropy Project",
+                        "date": "2024-10-29",
+                        "status": "Submitted"
+                    },
+                    "1": {
+                        "title": "Final Submission for Enthalpy Analysis",
+                        "date": "2024-11-12",
+                        "status": "Submitted"
+                    },
+                    "4": {
+                        "title": "Final Submission for Kinematics Simulation Project",
+                        "date": "2024-10-12",
+                        "status": "Submitted"
+                    }
+                },
+                "student456": {
+                    "0": {
+                        "title": "Final Submission for Entropy Project",
+                        "date": "2024-10-28",
+                        "status": "Submitted"
+                    },
+                    "1": {
+                        "title": "Final Submission for Enthalpy Analysis",
+                        "date": "2024-10-22",
+                        "status": "Submitted"
+                    },
+                    "4": {
+                        "title": "Final Submission for Kinematics Simulation Project",
+                        "date": "2024-10-01",
+                        "status": "Submitted"
+                    }
+                }
+            };
+            localStorage.setItem('latestSubmissions', JSON.stringify(latestSubmissions));
+        }
+
+
+
+
         //localStorage.removeItem('slapAlerts');
         if (!localStorage.getItem('slapAlerts')) {
             const initialAlerts = [
@@ -252,31 +368,31 @@
             localStorage.setItem('slapAlerts', JSON.stringify(initialAlerts));
         }
 
-        //localStorage.removeItem('courses');
+        localStorage.removeItem('courses');
         if (!localStorage.getItem('courses')) {
             const initialCourses = [
-                { courseID: 0, title: "Thermodynamics", courseCode: "MEC305", courseDescription: "", profSlapID: "misic", colour: "#0056b3",
+                { courseID: 0, title: "Thermodynamics", courseCode: "MEC305", courseDescription: "", image: "/course1.jpg", profSlapID: "misic", colour: "#0056b3",
                     dates: {
                         startDate: "2025-01-08",
                         endDate: "2025-05-15",
                         enrollmentDeadline: "2025-01-15"
                     }
                 },
-                { courseID: 1, title: "Engineering Dynamics", courseCode: "MEC120", courseDescription: "", profSlapID: "misic", colour: "#20561f",
+                { courseID: 1, title: "Engineering Dynamics", courseCode: "MEC120", courseDescription: "", image: "/course2.jpg", profSlapID: "misic", colour: "#20561f",
                     dates: {
                         startDate: "2025-01-08",
                         endDate: "2025-05-15",
                         enrollmentDeadline: "2025-01-15"
                     }
                 },
-                { courseID: 2, title: "Mechanical Vibrations", courseCode: "MEC310", courseDescription: "", profSlapID: "misic", colour: "#f0568f",
+                { courseID: 2, title: "Mechanical Vibrations", courseCode: "MEC310", courseDescription: "", image: "/course3.jpg", profSlapID: "misic", colour: "#f0568f",
                     dates: {
                         startDate: "2025-01-08",
                         endDate: "2025-05-15",
                         enrollmentDeadline: "2025-01-15"
                     }
                 },
-                { courseID: 3, title: "Fluid Dynamics", courseCode: "MEC278", courseDescription: "", profSlapID: "misic", colour: "#40f61f",
+                { courseID: 3, title: "Fluid Dynamics", courseCode: "MEC278", courseDescription: "", image: "/course4.jpg", profSlapID: "misic", colour: "#40f61f",
                     dates: {
                         startDate: "2025-01-08",
                         endDate: "2025-05-15",
@@ -287,10 +403,15 @@
             localStorage.setItem('courses', JSON.stringify(initialCourses));
         }
 
+        localStorage.removeItem('studentCourseRegistration');
         if (!localStorage.getItem('studentCourseRegistration')) {
             const initialStudentCourseRegistration = [
                 { studentID: "student123", courseID: 0 },
-                { studentID: "student456", courseID: 0 }
+                { studentID: "student123", courseID: 1 },
+                { studentID: "student123", courseID: 2 },
+                { studentID: "student123", courseID: 3 },
+                { studentID: "student456", courseID: 0 },
+                { studentID: "student456", courseID: 1 }
             ];
             localStorage.setItem('studentCourseRegistration', JSON.stringify(initialStudentCourseRegistration));
         }
