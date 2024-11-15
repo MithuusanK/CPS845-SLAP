@@ -130,7 +130,7 @@
         
                 courses.forEach(course => {
                     if (enrolledCourses.includes(course.courseID)) {
-                        const courseItem = document.createElement("div");
+                       const courseItem = document.createElement("div");
                         courseItem.classList.add("course-item");
                         courseItem.onclick = () => {
                             localStorage.setItem("selectedCourse", course.courseCode);
@@ -139,7 +139,7 @@
         
                         // Use course-specific image
                         const img = document.createElement("img");
-                        img.src = course.image;
+                        img.src = `./${course.image}`;
                         img.alt = course.title;
                         img.classList.add("course-image");
                         courseItem.appendChild(img);
@@ -171,7 +171,7 @@
                 localStorage.removeItem('selectedAssignment');
                 
                 // Redirect to login page (task1.html)
-                window.location.href = "task1.html";
+                window.location.href = "task2.html";
             }
         
             window.onload = viewCourses;

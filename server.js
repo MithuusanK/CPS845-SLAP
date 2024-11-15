@@ -71,7 +71,6 @@ app.get("/task17", (req, res) => {
   res.sendFile(path.join(__dirname, "task17.html"));
 });
 
-/
 // Sets up a file upload route to handle POST requests to the '/submit-assignment' endpoint
 // Uses the single() method from the configured multer instance from earlier in this file
 // Returns an error if there is no file uploaded

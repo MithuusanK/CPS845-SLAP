@@ -151,6 +151,8 @@
 
             <!-- View Evaluation button -->
             <button class="action-button" id="viewEvaluationButton">View Evaluation</button>
+
+            <button class="action-button" onclick="submitAssignment()" id="viewSubmissionButton">Click to Submit Your Assignment</button>
         </div>
 
         <a href="course_details.html" class="back-link">Back to Course</a>
@@ -194,6 +196,11 @@
                 });
             } else {
                 console.log("Assignment details not found for selectedAssignmentId:", selectedAssignmentId);
+            }
+
+            // Redirects to Assignment Submission Page
+            function submitAssignment() {
+                window.location.href = "task6.html";
             }
 
             // Set up View Submission Details button

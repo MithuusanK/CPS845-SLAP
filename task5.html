@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Password</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #e0e7ff, #f8fafc);
+        }
+
+        .change-password-container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            width: 48%;
+            padding: 0.8rem;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #cancelBtn {
+            background-color: #dc3545;
+        }
+
+        #cancelBtn:hover {
+            background-color: #c82333;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="change-password-container">
+        <h1>Change Password</h1>
+        <form id="changePasswordForm">
+            <div class="input-group">
+                <label for="slapID">SLAP ID</label>
+                <input type="text" id="slapID" name="slapID" required>
+            </div>
+            <div class="input-group">
+                <label for="oldPassword">Old Password</label>
+                <input type="password" id="oldPassword" name="oldPassword" required>
+            </div>
+            <div class="input-group">
+                <label for="newPassword">New Password</label>
+                <input type="password" id="newPassword" name="newPassword" required>
+            </div>
+            <div class="error-message" id="errorMessage"></div>
+            
+            <div class="button-group">
+                <button type="submit" id="changePasswordBtn">Change Password</button>
+                <button type="button" id="cancelBtn">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Initialize credentials if not present in localStorage
+        if (!localStorage.getItem('slapCredentials')) {
+            const initialCredentials = [
+                { username: "student123", password: "password123" },
+                { username: "student456", password: "password123" }
+            ];
+            localStorage.setItem('slapCredentials', JSON.stringify(initialCredentials));
+        }
+
+        document.getElementById('changePasswordForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+            const slapID = document.getElementById('slapID').value;
+            const oldPassword = document.getElementById('oldPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const credentials = JSON.parse(localStorage.getItem('slapCredentials')) || [];
+
+            // Find the user in the stored credentials
+            const userIndex = credentials.findIndex(user => user.username === slapID && user.password === oldPassword);
+            
+            if (userIndex !== -1) {
+                // Update the password
+                credentials[userIndex].password = newPassword;
+                localStorage.setItem('slapCredentials', JSON.stringify(credentials));
+                document.getElementById('errorMessage').textContent = "";
+                
+                // Redirect to success5.html
+                window.location.href = "success5.html";
+            } else {
+                document.getElementById('errorMessage').textContent = "Invalid username or old password.";
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        });
+
+        document.getElementById('cancelBtn').addEventListener('click', function() {
+            document.getElementById('slapID').value = "";
+            document.getElementById('oldPassword').value = "";
+            document.getElementById('newPassword').value = "";
+            window.location.href = "admin_dashboard.html";
+            document.getElementById('errorMessage').textContent = "";
+            document.getElementById('errorMessage').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
